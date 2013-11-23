@@ -3,13 +3,21 @@ import "strpool.js" as StrPool
 
 Rectangle {
     id: rootMain
-    width: 400
-    height: 300
+    width: 800
+    height: 600
+    color: StrPool.getColor(7);
 
     signal sentenceSelected(string str)
 
-    AnimatedScene {
+    FontLoader { id: scrog; source: "Scrogglet.ttf"; name:"scrogglet" }
 
+    AnimatedScene {
+        id: animscene
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.top: parent.top
+        anchors.topMargin: 20
+        width: 250
+        height: 250
     }
 
     ListModel {
@@ -22,17 +30,25 @@ Rectangle {
     ListView {
         id: strview
         model: strmdl
-        anchors.fill: parent
+        anchors.horizontalCenter: parent.horizontalCenter
+        width: parent.width
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 20
+        height: rootMain.height - animscene.height - 60
+
         interactive:false
         delegate: Rectangle {
             color: "transparent"
-            border.color: "black"
-            border.width: 1
-            height: 30
+//            border.color: "black"
+//            border.width: 1
+            height: 42
             width: parent.width
             Text {
+                font.family: scrog.name
+                font.pixelSize: 20
                 anchors.centerIn: parent
                 text: name
+                color: StrPool.getColor(-1);
             }
             MouseArea {
                 anchors.fill: parent

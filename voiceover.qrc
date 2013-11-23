@@ -4,5 +4,6 @@
         <file>qml/voiceover/secondscreen.qml</file>
         <file>qml/voiceover/AnimatedScene.qml</file>
         <file>qml/voiceover/strpool.js</file>
+        <file>qml/voiceover/Scrogglet.ttf</file>
     </qresource>
 </RCC>
