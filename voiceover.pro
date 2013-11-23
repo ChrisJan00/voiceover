@@ -14,10 +14,13 @@ QML_IMPORT_PATH =
 # Speed up launching on MeeGo/Harmattan when using applauncherd daemon
 # CONFIG += qdeclarative-boostable
 
+LIBS += -lSDL -lSDL_mixer
+
 # The .cpp file which was generated for your project. Feel free to hack it.
 SOURCES += main.cpp \
     secondview.cpp \
-    controller.cpp
+    controller.cpp \
+    soundclip.cpp
 
 # Installation path
 # target.path =
@@ -28,7 +31,8 @@ qtcAddDeployment()
 
 HEADERS += \
     secondview.h \
-    controller.h
+    controller.h \
+    soundclip.h
 
 RESOURCES += \
     voiceover.qrc

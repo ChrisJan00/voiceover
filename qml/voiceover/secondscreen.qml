@@ -1,4 +1,5 @@
 import QtQuick 1.1
+import SDLMixerWrapper 1.0
 import "strpool.js" as StrPool
 
 Rectangle {
@@ -6,14 +7,18 @@ Rectangle {
     height: 600
     color: StrPool.getColor(7);
     property string stringToShow: ""
-    property alias animDone: animsc.done
-    onAnimDoneChanged: if (animDone) {
-        fadeoutAnim.start();
-    }
 
     function startGame() {
         startFadeAnim.start();
+        mainTheme.play();
     }
+
+    property alias animDone: animsc.done
+    onAnimDoneChanged: if (animDone) {
+        fadeoutAnim.start();
+        mainTheme.fadeOut(1000);
+    }
+
 
     AnimatedScene {
         id: animsc
@@ -121,5 +126,12 @@ Rectangle {
                 text: "Berlin Mini Jam November 2013"
             }
         }
+    }
+
+    // sound
+    MusicClip {
+        id: mainTheme
+        source: "qml/voiceover/goldberg.mp3"
+        fadeInTime: 200
     }
 }

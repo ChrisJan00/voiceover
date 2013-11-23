@@ -1,11 +1,20 @@
 #include <QApplication>
+#include <QtDeclarative>
 #include "qmlapplicationviewer.h"
 #include "secondview.h"
 #include "controller.h"
+#include "soundclip.h"
 
 Q_DECL_EXPORT int main(int argc, char *argv[])
 {
     QScopedPointer<QApplication> app(createApplication(argc, argv));
+
+    MixerInstance mI;
+    if (!mI.isValid())
+        return -1;
+
+    qmlRegisterType<SoundClip>("SDLMixerWrapper",1,0,"SoundClip");
+    qmlRegisterType<MusicClip>("SDLMixerWrapper",1,0,"MusicClip");
 
     QmlApplicationViewer viewer;
     viewer.addImportPath(QLatin1String("modules"));
