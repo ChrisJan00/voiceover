@@ -94,7 +94,7 @@ Rectangle {
             PropertyAnimation {
                 target: overlay
                 properties: "opacity"
-                from: 1
+//                from: 1
                 to: 0
                 duration: 1000
             }
@@ -131,7 +131,7 @@ Rectangle {
     // sound
     MusicClip {
         id: mainTheme
-        source: "qml/voiceover/goldberg.mp3"
+        source: "qml/voiceover/goldberg.ogg"
         fadeInTime: 200
     }
 }

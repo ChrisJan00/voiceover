@@ -13,7 +13,23 @@ Rectangle {
 
     function start() {
         mainAnim.start()
+        timecount.start()
     }
+
+    property string mytime:"0:0"
+    property int scnds:0
+    Timer {
+        id: timecount
+        running: false
+        repeat: true
+        interval: 1000
+        onTriggered: {
+            scnds++;
+            mytime = Math.floor(scnds/60)+":"+(scnds%60)
+        }
+    }
+
+
 
     Component.onCompleted: {
         for (var xx=0; xx<15;xx++) {
@@ -72,8 +88,8 @@ Rectangle {
             ParallelAnimation {
                 property bool doit: animatedScene.moveFriends
                 onDoitChanged: if (doit) start();
-                PropertyAnimation { target:otherbox; properties:"x"; to:destX; duration:2500 }
-                PropertyAnimation { target:otherbox; properties:"y"; to:destY; duration:2500 }
+                PropertyAnimation { target:otherbox; properties:"x"; to:destX; duration:3500 }
+                PropertyAnimation { target:otherbox; properties:"y"; to:destY; duration:3500 }
             }
         }
     }
@@ -92,38 +108,56 @@ Rectangle {
 
     SequentialAnimation {
         id: mainAnim
+        PauseAnimation { duration: 1200 }
         ParallelAnimation {
-            PropertyAnimation { target:protag; properties:"x"; to:cellW*7; duration:1500 }
-            PropertyAnimation { target:protag; properties:"y"; to:cellW*7; duration:1500 }
+            PropertyAnimation { target:protag; properties:"x"; to:cellW*7; duration:2500 }
+            PropertyAnimation { target:protag; properties:"y"; to:cellW*7; duration:2500 }
         }
-        PauseAnimation { duration: 2000 }
-        PropertyAnimation { target: otherBoxesView; properties:"myopacity"; from:"0"; to:"1"; duration:1500}
-        PauseAnimation { duration: 500 }
+        PauseAnimation { duration: 4000 }
+        PropertyAnimation { target: otherBoxesView; properties:"myopacity"; from:"0"; to:"1"; duration:3500}
+        PauseAnimation { duration: 2500 }
         ScriptAction { script: animatedScene.moveFriends = true; }
-        PauseAnimation { duration: 4500 }
+        PauseAnimation { duration: 6000 }
         ParallelAnimation {
-            PropertyAnimation { target:protag; properties:"scale"; to:10; duration:5000 }
+            PropertyAnimation { target:protag; properties:"scale"; to:10; duration:8000 }
             SequentialAnimation {
-                PropertyAnimation { target: otherBoxesView; properties:"myopacity"; from:"1"; to:"0"; duration:1000}
-                PauseAnimation { duration: 1000 }
-                ColorAnimation { target: protag; properties:"color"; from: StrPool.getColor(3); to: StrPool.getColor(5); duration: 1500 }
+                PropertyAnimation { target: otherBoxesView; properties:"myopacity"; from:"1"; to:"0"; duration:3000}
+                PauseAnimation { duration: 3000 }
+                ColorAnimation { target: protag; properties:"color"; from: StrPool.getColor(3); to: StrPool.getColor(5); duration: 2000 }
             }
-        }
-        PauseAnimation { duration: 2000 }
-        ParallelAnimation {
-            PropertyAnimation { target:protag; properties:"scale"; to:1; duration:4000 }
-            PropertyAnimation { target:protag; properties:"x"; to: cellW*3; duration: 4000 }
-            PropertyAnimation { target:friend; properties: "opacity"; to: 1; duration: 4000 }
         }
         PauseAnimation { duration: 5000 }
         ParallelAnimation {
-            PropertyAnimation { target:protag; properties:"x"; to: cellW*7; duration: 2000 }
-            PropertyAnimation { target:friend; properties: "x"; to: cellW*8; duration: 2000 }
+            PropertyAnimation { target:protag; properties:"scale"; to:1; duration:5000 }
+            PropertyAnimation { target:protag; properties:"x"; to: cellW*3; duration: 5000 }
+            PropertyAnimation { target:friend; properties: "opacity"; to: 1; duration: 5000 }
+        }
+        PauseAnimation { duration: 3000 }
+        ParallelAnimation {
+            PropertyAnimation { target:protag; properties:"y"; to: cellW*10; duration: 2500 }
+            PropertyAnimation { target:friend; properties: "y"; to: cellW*3; duration: 2500 }
+        }
+        ParallelAnimation {
+            PropertyAnimation { target:protag; properties:"x"; to: cellW*12; duration: 2500 }
+            PropertyAnimation { target:friend; properties: "x"; to: cellW*3; duration: 2500 }
+        }
+        ParallelAnimation {
+            PropertyAnimation { target:protag; properties:"y"; to: cellW*7; duration: 2500 }
+            PropertyAnimation { target:friend; properties: "y"; to: cellW*7; duration: 2500 }
+        }
+
+        PauseAnimation { duration: 3000 }
+
+
+
+        ParallelAnimation {
+            PropertyAnimation { target:protag; properties:"x"; to: cellW*8; duration: 4000 }
+            PropertyAnimation { target:friend; properties: "x"; to: cellW*7; duration: 4000 }
             SequentialAnimation {
-                PauseAnimation { duration: 1700 }
+                PauseAnimation { duration: 3600 }
                 ParallelAnimation {
-                    PropertyAnimation { target:protag; properties:"opacity"; to: 0; duration: 300 }
-                    PropertyAnimation { target:friend; properties: "opacity"; to: 0; duration: 300 }
+                    PropertyAnimation { target:protag; properties:"opacity"; to: 0; duration: 400 }
+                    PropertyAnimation { target:friend; properties: "opacity"; to: 0; duration: 400 }
                 }
             }
         }
@@ -131,8 +165,12 @@ Rectangle {
 //        PauseAnimation { duration: 2000 }
 //        PropertyAnimation { target: otherBoxesView; properties:"myopacity"; from:"0"; to:"1"; duration:400}
 //        PropertyAnimation { target: otherBoxesView; properties:"myopacity"; from:"1"; to:"0"; duration:4000}
-        PauseAnimation { duration: 4000 }
+        PauseAnimation { duration: 3000 }
         ScriptAction { script: animatedScene.done=true; }
         PropertyAnimation { target: endText; properties:"opacity"; from:"0"; to:"1"; duration:1000 }
     }
+
+//    Text {
+//        text: mytime
+//    }
 }
