@@ -7,4 +7,8 @@ Rectangle {
     height: 62
 
     color: StrPool.getColor(2);
+
+    function start() {
+        console.log("STORY STARTS")
+    }
 }

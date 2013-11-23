@@ -17,6 +17,8 @@ void Controller::linkViews(QDeclarativeView *vmain, QDeclarativeView *vsecond)
 
 //    QObject::connect(itemone,SIGNAL(sentenceSelected(QString)),itemscnd,SLOT(showStr(QString)));
     QObject::connect(itemone,SIGNAL(sentenceSelected(QString)),this,SLOT(updateSentence(QString)));
+    QObject::connect(itemone,SIGNAL(gameStarts()),itemscnd,SLOT(startGame()));
+
 }
 
 void Controller::updateSentence(QString newSentence)

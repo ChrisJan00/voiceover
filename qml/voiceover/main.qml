@@ -8,6 +8,19 @@ Rectangle {
     color: StrPool.getColor(7);
 
     signal sentenceSelected(string str)
+    signal gameStarts
+    function startGame() {
+        startDelay.restart();
+    }
+
+    Timer {
+        id: startDelay
+        running: false
+        interval: 1000
+        repeat: false
+        onTriggered: animscene.start();
+    }
+
 
     FontLoader { id: scrog; source: "Scrogglet.ttf"; name:"scrogglet" }
 
@@ -59,4 +72,29 @@ Rectangle {
             }
         }
     }
+
+
+    // Start
+     Rectangle {
+         id: overlay
+         anchors.fill: parent
+         color: StrPool.getColor(7);
+         Text {
+             anchors.centerIn: parent
+             font.family: scrog.name
+             font.pixelSize: 48
+             horizontalAlignment:  Text.AlignHCenter
+             color: StrPool.getColor(-1);
+             text: "Click here to start"
+         }
+         MouseArea {
+             anchors.fill:parent
+             onClicked: {
+                 overlay.enabled = false;
+                 overlay.visible = false;
+                 rootMain.gameStarts();
+                 rootMain.startGame();
+             }
+         }
+     }
 }
