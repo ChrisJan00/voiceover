@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/vo">
+        <file>qml/voiceover/main.qml</file>
+        <file>qml/voiceover/secondscreen.qml</file>
+    </qresource>
+</RCC>
