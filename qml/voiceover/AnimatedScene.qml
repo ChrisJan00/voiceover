@@ -168,6 +168,8 @@ Rectangle {
         PauseAnimation { duration: 3000 }
         ScriptAction { script: animatedScene.done=true; }
         PropertyAnimation { target: endText; properties:"opacity"; from:"0"; to:"1"; duration:1000 }
+        PauseAnimation { duration: 5000 }
+        PropertyAnimation { target: endText; properties:"opacity"; from:"1"; to:"0"; duration:2000 }
     }
 
 //    Text {

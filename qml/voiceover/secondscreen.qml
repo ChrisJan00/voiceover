@@ -59,7 +59,7 @@ Rectangle {
             id: fadeoutAnim
             target: txt
             properties: "opacity"
-            from: 1
+//            from: 1
             to: 0
             duration: 400
         }
