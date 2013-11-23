@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QDeclarativeView>
+#include <QString>
 
 class Controller : public QObject
 {
@@ -13,8 +14,9 @@ public:
     void linkViews(QDeclarativeView *vmain, QDeclarativeView *vsecond);
     
 signals:
-    
+//    void showSentence(QVariant);
 public slots:
+    void updateSentence(QString newSentence);
 
 protected:
     QDeclarativeView *vMain, *vSecond;
