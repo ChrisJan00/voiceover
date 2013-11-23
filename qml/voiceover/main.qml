@@ -21,6 +21,8 @@ Rectangle {
         onTriggered: animscene.start();
     }
 
+    property alias animDone: animscene.done
+
 
     FontLoader { id: scrog; source: "Scrogglet.ttf"; name:"scrogglet" }
 
@@ -48,6 +50,8 @@ Rectangle {
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 20
         height: rootMain.height - animscene.height - 60
+        visible: !animDone
+        enabled: visible
 
         interactive:false
         delegate: Rectangle {
@@ -66,7 +70,8 @@ Rectangle {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    rootMain.sentenceSelected(name);
+                    if (name != "SKIP")
+                        rootMain.sentenceSelected(name);
                     StrPool.clicked(opt);
                 }
             }

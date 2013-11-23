@@ -6,6 +6,10 @@ Rectangle {
     height: 600
     color: StrPool.getColor(7);
     property string stringToShow: ""
+    property alias animDone: animsc.done
+    onAnimDoneChanged: if (animDone) {
+        fadeoutAnim.start();
+    }
 
     function startGame() {
         startFadeAnim.start();

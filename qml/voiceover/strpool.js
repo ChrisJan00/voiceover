@@ -11,8 +11,9 @@ function redoList() {
 function restart() {
     currentStep = 0;
     strmdl.clear();
-    ne("This was the most strange of all the days.  He could not believe\nwhat his eyes were seeing.");
-    ne("Start");
+    ne("I am here, stranded on this island.",1);
+    ne("When you close your eyes, the world banishes.",2);
+    ne("My life is like a pistaccio icecream.",3)
 }
 
 function ne(str, opt) {
@@ -20,22 +21,52 @@ function ne(str, opt) {
 }
 
 function clicked(opt) {
-
+    var noskip = false;
     strmdl.clear();
     switch (currentStep) {
     case 0: {
-        ne("hola");
-        ne("wat");
-        currentStep++;
+        switch(opt) {
+        case 1: {
+            ne("I am not sure if I miss people or not.",1);
+            ne("I should feel trapped, but I feel free.",1);
+            ne("It is not deserted. There is more people than space.",1);
+
+            break; }
+        case 2: { break; }
+        case 3: { break; }
+        }
         break;
     }
     case 1: {
-        ne("hey");
-        ne("my");
-        currentStep++;
+        switch(opt) {
+        case 1: { ne("I look towards the horizon. The sea around me.");
+
+            break; }
+        case 2: { break; }
+        case 3: { break; }
+        }
+        break;
+    }
+    case 2: {
+        ne("Some days I feel I should get out.\nSome days I want to stay here forever.", opt);
+        noskip = true;
+        break;
+    }
+    case 3: {
+        switch(opt) {
+        case 1: { break; }
+        case 2: { break; }
+        case 3: { break; }
+        }
+
+
         break;
     }
     }
+
+    if (!noskip)
+        ne("SKIP",opt);
+    currentStep++;
 }
 
 function getColor(ndx) {
