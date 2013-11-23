@@ -1,9 +1,14 @@
 import QtQuick 1.1
 
 Rectangle {
-    width: 300
-    height: 362
+    width: 400
+    height: 300
     property string stringToShow: ""
+
+    AnimatedScene {
+
+    }
+
     Text {
         id: txt
 //        text: qsTr("Second")

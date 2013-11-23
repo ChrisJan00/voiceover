@@ -35,4 +35,5 @@ RESOURCES += \
 
 OTHER_FILES += \
     qml/voiceover/main.qml \
-    qml/voiceover/secondscreen.qml
+    qml/voiceover/secondscreen.qml \
+    qml/voiceover/AnimatedScene.qml

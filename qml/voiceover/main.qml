@@ -1,42 +1,29 @@
 import QtQuick 1.1
+import "strpool.js" as StrPool
 
 Rectangle {
     id: rootMain
-    width: 360
-    height: 360
+    width: 400
+    height: 300
 
     signal sentenceSelected(string str)
 
+    AnimatedScene {
 
-//    Text {
-//        text: qsTr("First")
-//        anchors.centerIn: parent
-//    }
-//    MouseArea {
-//        anchors.fill: parent
-//        onClicked: {
-//            Qt.quit();
-//        }
-//    }
+    }
 
     ListModel {
         id: strmdl
-        ListElement {
-            name: "testing123"
-        }
-        ListElement {
-            name: "testing456"
-        }
-        ListElement {
-            name: "testing789"
-        }
     }
+
+    Component.onCompleted: StrPool.restart();
 
 
     ListView {
         id: strview
         model: strmdl
         anchors.fill: parent
+        interactive:false
         delegate: Rectangle {
             color: "transparent"
             border.color: "black"
@@ -50,8 +37,8 @@ Rectangle {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-//                    rootMain.currentString = name;
                     rootMain.sentenceSelected(name);
+                    StrPool.clicked(opt);
                 }
             }
         }

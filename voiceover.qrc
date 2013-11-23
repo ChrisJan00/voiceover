@@ -2,5 +2,7 @@
     <qresource prefix="/vo">
         <file>qml/voiceover/main.qml</file>
         <file>qml/voiceover/secondscreen.qml</file>
+        <file>qml/voiceover/AnimatedScene.qml</file>
+        <file>qml/voiceover/strpool.js</file>
     </qresource>
 </RCC>
