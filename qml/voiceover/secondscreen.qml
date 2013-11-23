@@ -26,13 +26,49 @@ Rectangle {
         id: txt
         font.family: scrog.name
         font.pixelSize: 28
+        horizontalAlignment:  Text.AlignHCenter
         color: StrPool.getColor(-1);
-//        text: qsTr("Second")
         text: stringToShow
+        opacity: 0
+        onTextChanged: {
+            fadeoutAnim.stop();
+            if (opacity == 0)
+                fadeinAnim.start();
+            else
+                opacity = 1;
+            showtime.stop();
+            showtime.interval = stringToShow.length * 40 + 1500;
+            showtime.restart();
+        }
+
+        PropertyAnimation {
+            id: fadeoutAnim
+            target: txt
+            properties: "opacity"
+            from: 1
+            to: 0
+            duration: 400
+        }
+
+        PropertyAnimation {
+            id: fadeinAnim
+            target: txt
+            properties: "opacity"
+            from: 0
+            to: 1
+            duration: 100
+        }
+
+        Timer {
+            id: showtime
+            interval: 3000
+            repeat: false
+            running: false
+            onTriggered: {
+                fadeoutAnim.start();
+            }
+        }
     }
 
-//    function onShowStr(str) {
-//        txt.text = str;
-//    }
 
 }

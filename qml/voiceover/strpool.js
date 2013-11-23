@@ -11,7 +11,7 @@ function redoList() {
 function restart() {
     currentStep = 0;
     strmdl.clear();
-    ne("Christiaan Janssen\npresents this");
+    ne("This was the most strange of all the days.  He could not believe\nwhat his eyes were seeing.");
     ne("Start");
 }
 
