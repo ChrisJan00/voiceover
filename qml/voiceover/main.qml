@@ -11,6 +11,7 @@ Rectangle {
     signal gameStarts
     function startGame() {
         startDelay.restart();
+        futurescene.startSkip();
     }
 
     Timer {
@@ -18,7 +19,9 @@ Rectangle {
         running: false
         interval: 1000
         repeat: false
-        onTriggered: animscene.start();
+        onTriggered: {
+            animscene.start();
+        }
     }
 
     property alias animDone: animscene.done
@@ -26,11 +29,42 @@ Rectangle {
 
     FontLoader { id: scrog; source: "Scrogglet.ttf"; name:"scrogglet" }
 
+    Text {
+        x: animscene.x
+        width: animscene.width
+        font.family: scrog.name
+        font.pixelSize: 16
+        horizontalAlignment:  Text.AlignHCenter
+        color: StrPool.getColor(-1);
+        text: "now"
+    }
+
     AnimatedScene {
         id: animscene
-        anchors.horizontalCenter: parent.horizontalCenter
+        //anchors.horizontalCenter: parent.horizontalCenter
+        x: 100
         anchors.top: parent.top
-        anchors.topMargin: 20
+        anchors.topMargin: 30
+        width: 250
+        height: 250
+    }
+
+    Text {
+        x: futurescene.x
+        width: futurescene.width
+        font.family: scrog.name
+        font.pixelSize: 16
+        horizontalAlignment:  Text.AlignHCenter
+        color: StrPool.getColor(-1);
+        text: "2 seconds ahead"
+    }
+
+    AnimatedScene {
+        id: futurescene
+        //anchors.horizontalCenter: parent.horizontalCenter
+        x: 450
+        anchors.top: parent.top
+        anchors.topMargin: 30
         width: 250
         height: 250
     }

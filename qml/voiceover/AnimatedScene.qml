@@ -12,8 +12,12 @@ Rectangle {
     property bool done:false
 
     function start() {
-        mainAnim.start()
+        delayedAnim.start()
         timecount.start()
+    }
+
+    function startSkip() {
+        mainAnim.start()
     }
 
     property string mytime:"0:0"
@@ -104,11 +108,14 @@ Rectangle {
             opacity: 0
         }
 
-
+        SequentialAnimation {
+            id: delayedAnim
+            PauseAnimation { duration: 1000 }
+            ScriptAction { script: mainAnim.start(); }
+        }
 
     SequentialAnimation {
         id: mainAnim
-        PauseAnimation { duration: 1200 }
         ParallelAnimation {
             PropertyAnimation { target:protag; properties:"x"; to:cellW*7; duration:2500 }
             PropertyAnimation { target:protag; properties:"y"; to:cellW*7; duration:2500 }
