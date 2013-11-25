@@ -17,7 +17,6 @@ Rectangle {
         StrPool.restart();
         gameStarts(); // emit signal
         startDelay.restart();
-        futurescene.startSkip();
     }
 
     Timer {
@@ -37,45 +36,13 @@ Rectangle {
         }
     }
 
-
     FontLoader { id: scrog; source: "Scrogglet.ttf"; name:"scrogglet" }
-
-    Text {
-        x: animscene.x
-        width: animscene.width
-        font.family: scrog.name
-        font.pixelSize: 16
-        horizontalAlignment:  Text.AlignHCenter
-        color: StrPool.getColor(-1);
-        text: "now"
-    }
 
     AnimatedScene {
         id: animscene
-        //anchors.horizontalCenter: parent.horizontalCenter
-        x: 100
+        anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: parent.top
-        anchors.topMargin: 30
-        width: 250
-        height: 250
-    }
-
-    Text {
-        x: futurescene.x
-        width: futurescene.width
-        font.family: scrog.name
-        font.pixelSize: 16
-        horizontalAlignment:  Text.AlignHCenter
-        color: StrPool.getColor(-1);
-        text: "2 seconds ahead"
-    }
-
-    AnimatedScene {
-        id: futurescene
-        //anchors.horizontalCenter: parent.horizontalCenter
-        x: 450
-        anchors.top: parent.top
-        anchors.topMargin: 30
+        anchors.topMargin: 10
         width: 250
         height: 250
     }
