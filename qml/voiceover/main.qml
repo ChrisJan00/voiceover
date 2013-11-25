@@ -12,6 +12,10 @@ Rectangle {
     signal sentenceSelected(string str)
     signal gameStarts
     function startGame() {
+        overlay.visible = false;
+        animDone = false;
+        StrPool.restart();
+        gameStarts(); // emit signal
         startDelay.restart();
         futurescene.startSkip();
     }
@@ -27,6 +31,11 @@ Rectangle {
     }
 
     property alias animDone: animscene.done
+    onAnimDoneChanged: {
+        if (animDone) {
+            overlay.visible = true;
+        }
+    }
 
 
     FontLoader { id: scrog; source: "Scrogglet.ttf"; name:"scrogglet" }
@@ -120,6 +129,7 @@ Rectangle {
          id: overlay
          anchors.fill: parent
          color: StrPool.getColor(7);
+         enabled: visible
          Column {
              anchors.centerIn: parent
              Text {
@@ -133,9 +143,6 @@ Rectangle {
                  MouseArea {
                      anchors.fill:parent
                      onClicked: {
-                         overlay.enabled = false;
-                         overlay.visible = false;
-                         rootMain.gameStarts();
                          rootMain.startGame();
                      }
                  }
