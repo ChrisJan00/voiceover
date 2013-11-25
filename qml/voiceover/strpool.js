@@ -1,4 +1,7 @@
 var currentStep = 0;
+var recording = [];
+var recordNdx = 0;
+var startTime = 0;
 
 function redoList() {
 //    rootMain.sentenceSelected("HOLA");
@@ -10,11 +13,60 @@ function redoList() {
 
 function restart() {
     currentStep = 0;
+    startTime = new Date();
+    recordNdx = 0;
     strmdl.clear();
     ne("I am here, stranded on this island.",1);
     ne("When you close your eyes, the world banishes.",2);
     ne("My life is like a pistaccio icecream.",3)
 }
+
+function startRecording() {
+    recording = [];
+}
+
+function recorded() {
+    return recording.length > 0;
+}
+
+function recordSentence(sentence) {
+    var currentTime = new Date();
+    var mark = currentTime - startTime;
+    startTime = currentTime;
+
+    recording.push([sentence, mark]);
+}
+
+function getNextSentence() {
+    if (recordNdx == recording.length)
+        return -1;
+    var retval = recording[recordNdx];
+    recordNdx++;
+    return retval;
+}
+
+
+function getColor(ndx) {
+    switch(ndx) {
+    case 0: return "#776238"; break;
+    case 1: return "#816B3E"; break;
+    case 2: return "#8C7444"; break;
+    case 3: return "#977D49"; break;
+    case 4: return "#A18650"; break;
+    case 5: return "#AB8F57"; break;
+    case 6: return "#B09662"; break;
+    case 7: return "#B59D6E"; break;
+    case -1: return "#3E3B62"; break;
+    case -2: return "#45416B"; break;
+    case -3: return "#4B4773"; break;
+    case -4: return "#514D7C"; break;
+    case -5: return "#575485"; break;
+    case -6: return "#5E5A8E"; break;
+    case -7: return "#646097"; break;
+    case -8: return "#6C689E"; break;
+    }
+}
+
 
 function ne(str, opt) {
     strmdl.append({"name":str, "opt":opt});
@@ -144,25 +196,4 @@ function clicked(opt) {
     if (!noskip)
         ne("SKIP",opt);
     currentStep++;
-}
-
-function getColor(ndx) {
-    switch(ndx) {
-    case 0: return "#776238"; break;
-    case 1: return "#816B3E"; break;
-    case 2: return "#8C7444"; break;
-    case 3: return "#977D49"; break;
-    case 4: return "#A18650"; break;
-    case 5: return "#AB8F57"; break;
-    case 6: return "#B09662"; break;
-    case 7: return "#B59D6E"; break;
-    case -1: return "#3E3B62"; break;
-    case -2: return "#45416B"; break;
-    case -3: return "#4B4773"; break;
-    case -4: return "#514D7C"; break;
-    case -5: return "#575485"; break;
-    case -6: return "#5E5A8E"; break;
-    case -7: return "#646097"; break;
-    case -8: return "#6C689E"; break;
-    }
 }

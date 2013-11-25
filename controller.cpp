@@ -22,7 +22,7 @@ void Controller::linkViews(SecondView *vmain, SecondView *vsecond)
     QObject::connect(vMain,SIGNAL(winClosed()),this,SLOT(mainClosed()));
     QObject::connect(vSecond,SIGNAL(winClosed()),this,SLOT(secondClosed()));
     QObject::connect(itemone,SIGNAL(gameStarts()),this,SLOT(startGame()));
-
+    QObject::connect(itemone,SIGNAL(interruptRecord()),itemscnd,SLOT(interruptPlay()));
 
 }
 

@@ -13,8 +13,14 @@ Rectangle {
     property bool aboutToFinish: false
 
     function start() {
-        mainAnim.start()
+        mainAnim.restart()
         timecount.start()
+    }
+
+    function stop() {
+        mainAnim.stop();
+        aboutToFinish = true;
+        done = true;
     }
 
     property string mytime:"0:0"
@@ -119,6 +125,7 @@ Rectangle {
                 protag.color = StrPool.getColor(3);
                 protag.x = cellW*3;
                 protag.y = cellW*2;
+                protag.scale = 1;
                 friend.opacity = 0;
                 friend.x = cellW*12;
                 friend.y = cellW*7;

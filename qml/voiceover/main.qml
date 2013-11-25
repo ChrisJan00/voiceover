@@ -7,16 +7,21 @@ Rectangle {
     height: 600
     color: StrPool.getColor(7);
 
-    property bool replayAvailable: false
+    property bool replayAvailable: false;
+    property bool isReplaying: false;
 
     signal sentenceSelected(string str)
     signal gameStarts
+    signal interruptRecord
+
     function startGame() {
+        isReplaying = false;
         overlay.visible = false;
         animDone = false;
         StrPool.restart();
+        StrPool.startRecording();
         gameStarts(); // emit signal
-        startDelay.restart();
+        startDelay.restart(); // start on my side
     }
 
     Timer {
@@ -32,7 +37,50 @@ Rectangle {
     property alias animDone: animscene.done
     onAnimDoneChanged: {
         if (animDone) {
+            replayAvailable = true;
             overlay.visible = true;
+        }
+    }
+
+    function replay() {
+        isReplaying = true;
+        overlay.visible = false;
+        gameStarts();
+        startDelay.start();
+        replayTimer.begin();
+    }
+
+    function stopReplay() {
+        interruptRecord();
+        isReplaying = false;
+        replayTimer.stop();
+        overlay.visible = true;
+
+    }
+
+    Timer {
+        id: replayTimer
+        running: false
+        repeat: true
+        triggeredOnStart: true
+        interval: 0
+        property string lastSentence : "";
+        function begin() {
+            stop();
+            interval = 0;
+            StrPool.restart();
+            lastSentence = "";
+            restart();
+        }
+        onTriggered: {
+            rootMain.sentenceSelected(lastSentence);
+            var nextSentencePack = StrPool.getNextSentence();
+            if (nextSentencePack == -1) {
+                stop();
+            } else {
+                interval = nextSentencePack[1];
+                lastSentence = nextSentencePack[0]
+            }
         }
     }
 
@@ -82,12 +130,40 @@ Rectangle {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    if (name != "SKIP")
+                    if (name != "SKIP") {
                         rootMain.sentenceSelected(name);
+                        StrPool.recordSentence(name);
+                    }
                     StrPool.clicked(opt);
                 }
             }
         }
+    }
+
+    Rectangle {
+        id: replayOverlay
+        anchors.fill: parent
+        color: StrPool.getColor(7);
+        enabled: visible
+        visible: isReplaying
+        Column {
+            anchors.centerIn: parent
+            Text {
+                anchors.horizontalCenter: parent.horizontalCenter
+                font.family: scrog.name
+                font.pixelSize: 48
+                horizontalAlignment:  Text.AlignHCenter
+                color: StrPool.getColor(-1);
+                text: "Stop replay"
+
+            }
+        }
+            MouseArea {
+                anchors.fill:parent
+                onClicked: {
+                    rootMain.stopReplay();
+                }
+            }
     }
 
 
@@ -97,6 +173,12 @@ Rectangle {
          anchors.fill: parent
          color: StrPool.getColor(7);
          enabled: visible
+         MouseArea {
+             anchors.fill:parent
+             onClicked: {
+                 // eat all the clicks
+             }
+         }
          Column {
              anchors.centerIn: parent
              Text {
@@ -121,12 +203,12 @@ Rectangle {
                  font.pixelSize: 48
                  horizontalAlignment:  Text.AlignHCenter
                  color: StrPool.getColor(-1);
-                 text: "Replay last"
+                 text: "Replay recording"
 
                  MouseArea {
                      anchors.fill:parent
                      onClicked: {
-//                         Qt.quit();
+                         rootMain.replay();
                      }
                  }
              }

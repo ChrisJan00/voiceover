@@ -167,11 +167,6 @@ void QmlApplicationViewer::showExpanded()
 #endif
 }
 
-void QmlApplicationViewer::closeEvent(QCloseEvent *)
-{
-    emit winClosed();
-}
-
 QApplication *createApplication(int &argc, char **argv)
 {
 #ifdef HARMATTAN_BOOSTER

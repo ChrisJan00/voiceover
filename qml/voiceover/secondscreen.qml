@@ -9,8 +9,12 @@ Rectangle {
     property string stringToShow: ""
 
     function startGame() {
-        startFadeAnim.start();
+        startFadeAnim.restart();
         mainTheme.play();
+    }
+
+    function interruptPlay() {
+        animsc.stop();
     }
 
     property alias animAboutToFinish: animsc.aboutToFinish
