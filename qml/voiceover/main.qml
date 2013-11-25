@@ -1,6 +1,14 @@
 import QtQuick 1.1
 import "strpool.js" as StrPool
 
+// TODO:
+// the anims have to be reset immediately (not 1-sec delay)
+// countdown at start to give player time for reaction
+// text alignment/spacing in the selection
+// If possible only single-sentence texts
+// credits: song
+// rewrite text / fit better into anim
+
 Rectangle {
     id: rootMain
     width: 800
