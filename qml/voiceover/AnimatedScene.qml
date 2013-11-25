@@ -129,6 +129,8 @@ Rectangle {
                 friend.opacity = 0;
                 friend.x = cellW*12;
                 friend.y = cellW*7;
+                endText.opacity = 0;
+                otherBoxesView.myopacity = 0;
                 moveFriends = false;
                 done = false;
                 aboutToFinish = false;
