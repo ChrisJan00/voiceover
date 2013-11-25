@@ -10,14 +10,11 @@ Rectangle {
 
     property bool moveFriends: false
     property bool done:false
+    property bool aboutToFinish: false
 
     function start() {
-        delayedAnim.start()
-        timecount.start()
-    }
-
-    function startSkip() {
         mainAnim.start()
+        timecount.start()
     }
 
     property string mytime:"0:0"
@@ -89,12 +86,18 @@ Rectangle {
             opacity: otherBoxesView.myopacity
             x: origX
             y: origY
+            property bool resetTrigger: !animatedScene.moveFriends
+            onResetTriggerChanged: if (resetTrigger) {
+                                       x = origX;
+                                       y = origY;
+                                   }
             ParallelAnimation {
                 property bool doit: animatedScene.moveFriends
                 onDoitChanged: if (doit) start();
                 PropertyAnimation { target:otherbox; properties:"x"; to:destX; duration:3500 }
                 PropertyAnimation { target:otherbox; properties:"y"; to:destY; duration:3500 }
             }
+
         }
     }
 
@@ -108,14 +111,23 @@ Rectangle {
             opacity: 0
         }
 
-        SequentialAnimation {
-            id: delayedAnim
-            PauseAnimation { duration: 1000 }
-            ScriptAction { script: mainAnim.start(); }
-        }
-
     SequentialAnimation {
         id: mainAnim
+        ScriptAction {
+            script: {
+                protag.opacity = 1;
+                protag.color = StrPool.getColor(3);
+                protag.x = cellW*3;
+                protag.y = cellW*2;
+                friend.opacity = 0;
+                friend.x = cellW*12;
+                friend.y = cellW*7;
+                moveFriends = false;
+                done = false;
+                aboutToFinish = false;
+            }
+        }
+        PauseAnimation { duration: 1200 }
         ParallelAnimation {
             PropertyAnimation { target:protag; properties:"x"; to:cellW*7; duration:2500 }
             PropertyAnimation { target:protag; properties:"y"; to:cellW*7; duration:2500 }
@@ -173,10 +185,12 @@ Rectangle {
 //        PropertyAnimation { target: otherBoxesView; properties:"myopacity"; from:"0"; to:"1"; duration:400}
 //        PropertyAnimation { target: otherBoxesView; properties:"myopacity"; from:"1"; to:"0"; duration:4000}
         PauseAnimation { duration: 3000 }
-        ScriptAction { script: animatedScene.done=true; }
+        ScriptAction { script: animatedScene.aboutToFinish=true; }
         PropertyAnimation { target: endText; properties:"opacity"; from:"0"; to:"1"; duration:1000 }
-        PauseAnimation { duration: 5000 }
+        PauseAnimation { duration: 2500 }
         PropertyAnimation { target: endText; properties:"opacity"; from:"1"; to:"0"; duration:2000 }
+        ScriptAction { script: animatedScene.done=true; }
+
     }
 
 //    Text {

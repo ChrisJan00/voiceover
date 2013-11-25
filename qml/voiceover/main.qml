@@ -62,7 +62,7 @@ Rectangle {
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 20
         height: rootMain.height - animscene.height - 60
-        visible: !animDone
+        visible: !animscene.aboutToFinish
         enabled: visible
 
         interactive:false

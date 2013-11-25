@@ -13,10 +13,15 @@ Rectangle {
         mainTheme.play();
     }
 
-    property alias animDone: animsc.done
-    onAnimDoneChanged: if (animDone) {
+    property alias animAboutToFinish: animsc.aboutToFinish
+    onAnimAboutToFinishChanged: if (animAboutToFinish) {
         fadeoutAnim.start();
         mainTheme.fadeOut(1000);
+    }
+
+    property alias animDone: animsc.done
+    onAnimDoneChanged: if (animDone) {
+        endFadeAnim.start();
     }
 
 
@@ -94,7 +99,6 @@ Rectangle {
             PropertyAnimation {
                 target: overlay
                 properties: "opacity"
-//                from: 1
                 to: 0
                 duration: 1000
             }
@@ -102,6 +106,14 @@ Rectangle {
                 script: animsc.start();
             }
         }
+        PropertyAnimation {
+            id: endFadeAnim
+                target: overlay
+                properties: "opacity"
+                to: 1
+                duration: 1000
+        }
+
         Column {
             anchors.centerIn: parent
             Text {
