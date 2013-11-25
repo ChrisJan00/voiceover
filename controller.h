@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QDeclarativeView>
 #include <QString>
+#include "secondview.h"
 
 class Controller : public QObject
 {
@@ -11,15 +12,19 @@ class Controller : public QObject
 public:
     explicit Controller(QObject *parent = 0);
 
-    void linkViews(QDeclarativeView *vmain, QDeclarativeView *vsecond);
+    void linkViews(SecondView *vmain, SecondView *vsecond);
     
 signals:
 //    void showSentence(QVariant);
 public slots:
     void updateSentence(QString newSentence);
+    void startGame();
+    void mainClosed();
+    void secondClosed();
 
 protected:
-    QDeclarativeView *vMain, *vSecond;
+    SecondView *vMain, *vSecond;
+    bool secondIsOpen;
 };
 
 #endif // CONTROLLER_H

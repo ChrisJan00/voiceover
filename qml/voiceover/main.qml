@@ -7,6 +7,8 @@ Rectangle {
     height: 600
     color: StrPool.getColor(7);
 
+    property bool replayAvailable: false
+
     signal sentenceSelected(string str)
     signal gameStarts
     function startGame() {
@@ -118,21 +120,56 @@ Rectangle {
          id: overlay
          anchors.fill: parent
          color: StrPool.getColor(7);
-         Text {
+         Column {
              anchors.centerIn: parent
-             font.family: scrog.name
-             font.pixelSize: 48
-             horizontalAlignment:  Text.AlignHCenter
-             color: StrPool.getColor(-1);
-             text: "Click here to start"
-         }
-         MouseArea {
-             anchors.fill:parent
-             onClicked: {
-                 overlay.enabled = false;
-                 overlay.visible = false;
-                 rootMain.gameStarts();
-                 rootMain.startGame();
+             Text {
+                 anchors.horizontalCenter: parent.horizontalCenter
+                 font.family: scrog.name
+                 font.pixelSize: 48
+                 horizontalAlignment:  Text.AlignHCenter
+                 color: StrPool.getColor(-1);
+                 text: "New game"
+
+                 MouseArea {
+                     anchors.fill:parent
+                     onClicked: {
+                         overlay.enabled = false;
+                         overlay.visible = false;
+                         rootMain.gameStarts();
+                         rootMain.startGame();
+                     }
+                 }
+             }
+             Text {
+                 visible: replayAvailable
+                 anchors.horizontalCenter: parent.horizontalCenter
+                 font.family: scrog.name
+                 font.pixelSize: 48
+                 horizontalAlignment:  Text.AlignHCenter
+                 color: StrPool.getColor(-1);
+                 text: "Replay last"
+
+                 MouseArea {
+                     anchors.fill:parent
+                     onClicked: {
+//                         Qt.quit();
+                     }
+                 }
+             }
+             Text {
+                 anchors.horizontalCenter: parent.horizontalCenter
+                 font.family: scrog.name
+                 font.pixelSize: 48
+                 horizontalAlignment:  Text.AlignHCenter
+                 color: StrPool.getColor(-1);
+                 text: "Exit"
+
+                 MouseArea {
+                     anchors.fill:parent
+                     onClicked: {
+                         Qt.quit();
+                     }
+                 }
              }
          }
      }

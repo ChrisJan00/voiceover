@@ -7,10 +7,11 @@ Controller::Controller(QObject *parent) :
 {
 }
 
-void Controller::linkViews(QDeclarativeView *vmain, QDeclarativeView *vsecond)
+void Controller::linkViews(SecondView *vmain, SecondView *vsecond)
 {
     vMain = vmain;
     vSecond = vsecond;
+    secondIsOpen = vsecond->isVisible();
 
     QObject *itemone = vmain->rootObject();
     QObject *itemscnd = vSecond->rootObject();
@@ -18,6 +19,10 @@ void Controller::linkViews(QDeclarativeView *vmain, QDeclarativeView *vsecond)
 //    QObject::connect(itemone,SIGNAL(sentenceSelected(QString)),itemscnd,SLOT(showStr(QString)));
     QObject::connect(itemone,SIGNAL(sentenceSelected(QString)),this,SLOT(updateSentence(QString)));
     QObject::connect(itemone,SIGNAL(gameStarts()),itemscnd,SLOT(startGame()));
+    QObject::connect(vMain,SIGNAL(winClosed()),this,SLOT(mainClosed()));
+    QObject::connect(vSecond,SIGNAL(winClosed()),this,SLOT(secondClosed()));
+    QObject::connect(itemone,SIGNAL(gameStarts()),this,SLOT(startGame()));
+
 
 }
 
@@ -25,4 +30,24 @@ void Controller::updateSentence(QString newSentence)
 {
 //    emit showSentence(vMain->rootContext()->);
     vSecond->rootObject()->setProperty("stringToShow", newSentence);
+}
+
+void Controller::startGame()
+{
+    if (!secondIsOpen) {
+        vSecond->show();
+        linkViews(vMain, vSecond);
+    }
+}
+
+void Controller::mainClosed()
+{
+    if (secondIsOpen) {
+        vSecond->close();
+    }
+}
+
+void Controller::secondClosed()
+{
+    secondIsOpen = false;
 }

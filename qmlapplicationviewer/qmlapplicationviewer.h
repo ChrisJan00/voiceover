@@ -37,6 +37,12 @@ public:
 
     void showExpanded();
 
+signals:
+    void winClosed();
+
+protected:
+    void closeEvent(QCloseEvent *);
+
 private:
     class QmlApplicationViewerPrivate *d;
 };

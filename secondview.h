@@ -10,11 +10,12 @@ public:
     explicit SecondView(QWidget *parent = 0);
     virtual ~SecondView();
 
-
-    
 signals:
-    
-public slots:
+    void winClosed();
+
+protected:
+    void closeEvent(QCloseEvent *);
+
     
 };
 

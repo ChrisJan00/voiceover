@@ -16,20 +16,19 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     qmlRegisterType<SoundClip>("SDLMixerWrapper",1,0,"SoundClip");
     qmlRegisterType<MusicClip>("SDLMixerWrapper",1,0,"MusicClip");
 
-    QmlApplicationViewer viewer;
-    viewer.addImportPath(QLatin1String("modules"));
-    viewer.setOrientation(QmlApplicationViewer::ScreenOrientationAuto);
-    viewer.setMainQmlFile(QLatin1String("qml/voiceover/main.qml"));
+    SecondView viewer;
+    viewer.setSource(QUrl(QLatin1String("qml/voiceover/main.qml")));
+    viewer.setWindowTitle(QLatin1String("Control panel"));
 
     SecondView audienceViewer;
     audienceViewer.setSource(QUrl(QLatin1String("qml/voiceover/secondscreen.qml")));
-
+    audienceViewer.setWindowTitle(QLatin1String("Voice Over"));
 
     Controller gameControl;
-    gameControl.linkViews(&viewer, &audienceViewer);
 
-    viewer.showExpanded();
+    viewer.show();
     audienceViewer.show();
+    gameControl.linkViews(&viewer, &audienceViewer);
 
     return app->exec();
 }
