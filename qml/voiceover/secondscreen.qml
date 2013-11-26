@@ -9,28 +9,28 @@ Rectangle {
     property string stringToShow: ""
 
     function startGame() {
+        animscene.reset();
         startFadeAnim.restart();
-        mainTheme.play();
     }
 
     function interruptPlay() {
-        animsc.stop();
+        animscene.stop();
     }
 
-    property alias animAboutToFinish: animsc.aboutToFinish
+    property alias animAboutToFinish: animscene.aboutToFinish
     onAnimAboutToFinishChanged: if (animAboutToFinish) {
         fadeoutAnim.start();
         mainTheme.fadeOut(1000);
     }
 
-    property alias animDone: animsc.done
+    property alias animDone: animscene.done
     onAnimDoneChanged: if (animDone) {
         endFadeAnim.start();
     }
 
 
     AnimatedScene {
-        id: animsc
+        id: animscene
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.topMargin: 10
         anchors.top: parent.top
@@ -43,7 +43,7 @@ Rectangle {
     // Legend
     Text {
         anchors.horizontalCenter: parent.horizontalCenter
-        anchors.top: animsc.bottom
+        anchors.top: animscene.bottom
         anchors.topMargin: 10
 
         id: txt
@@ -107,7 +107,10 @@ Rectangle {
                 duration: 1000
             }
             ScriptAction {
-                script: animsc.start();
+                script: {
+                    mainTheme.play();
+                    animscene.start();
+                }
             }
         }
         PropertyAnimation {

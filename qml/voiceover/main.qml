@@ -28,6 +28,7 @@ Rectangle {
         animDone = false;
         StrPool.restart();
         StrPool.startRecording();
+        animscene.reset();
         gameStarts(); // emit signal
         startDelay.restart(); // start on my side
     }
@@ -51,6 +52,7 @@ Rectangle {
     }
 
     function replay() {
+        animscene.reset();
         isReplaying = true;
         overlay.visible = false;
         gameStarts();
@@ -60,6 +62,7 @@ Rectangle {
 
     function stopReplay() {
         interruptRecord();
+        animscene.stop();
         isReplaying = false;
         replayTimer.stop();
         overlay.visible = true;

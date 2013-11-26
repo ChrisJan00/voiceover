@@ -12,6 +12,22 @@ Rectangle {
     property bool done:false
     property bool aboutToFinish: false
 
+    function reset() {
+        protag.opacity = 1;
+        protag.color = StrPool.getColor(3);
+        protag.x = cellW*3;
+        protag.y = cellW*2;
+        protag.scale = 1;
+        friend.opacity = 0;
+        friend.x = cellW*12;
+        friend.y = cellW*7;
+        endText.opacity = 0;
+        otherBoxesView.myopacity = 0;
+        moveFriends = false;
+        done = false;
+        aboutToFinish = false;
+    }
+
     function start() {
         mainAnim.restart()
         timecount.start()
@@ -119,23 +135,6 @@ Rectangle {
 
     SequentialAnimation {
         id: mainAnim
-        ScriptAction {
-            script: {
-                protag.opacity = 1;
-                protag.color = StrPool.getColor(3);
-                protag.x = cellW*3;
-                protag.y = cellW*2;
-                protag.scale = 1;
-                friend.opacity = 0;
-                friend.x = cellW*12;
-                friend.y = cellW*7;
-                endText.opacity = 0;
-                otherBoxesView.myopacity = 0;
-                moveFriends = false;
-                done = false;
-                aboutToFinish = false;
-            }
-        }
         PauseAnimation { duration: 1200 }
         ParallelAnimation {
             PropertyAnimation { target:protag; properties:"x"; to:cellW*7; duration:2500 }
