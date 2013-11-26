@@ -18,7 +18,8 @@ function restart() {
     strmdl.clear();
     ne("I am here, stranded on this island.",1);
     ne("When you close your eyes, the world banishes.",2);
-    ne("My life is like a pistaccio icecream.",3)
+    ne("My life is like a pistaccio icecream.",3);
+    ne("SKIP",2);
 }
 
 function startRecording() {

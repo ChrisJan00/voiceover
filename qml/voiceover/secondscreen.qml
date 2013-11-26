@@ -9,7 +9,7 @@ Rectangle {
     property string stringToShow: ""
 
     function startGame() {
-        animscene.reset();
+        animscene.start();
         startFadeAnim.restart();
     }
 
@@ -36,6 +36,7 @@ Rectangle {
         anchors.top: parent.top
         width: 500
         height: 500
+        showcountdown: false
     }
 
     FontLoader { id: scrog; source: "Scrogglet.ttf"; name:"scrogglet" }
@@ -100,6 +101,7 @@ Rectangle {
         color: StrPool.getColor(7);
         SequentialAnimation {
             id: startFadeAnim
+            PauseAnimation { duration: 2000 }
             PropertyAnimation {
                 target: overlay
                 properties: "opacity"
@@ -109,7 +111,6 @@ Rectangle {
             ScriptAction {
                 script: {
                     mainTheme.play();
-                    animscene.start();
                 }
             }
         }
@@ -125,24 +126,31 @@ Rectangle {
             anchors.centerIn: parent
             Text {
                 font.family: scrog.name
-                font.pixelSize: 48
+                font.pixelSize: 52
                 horizontalAlignment:  Text.AlignHCenter
                 color: StrPool.getColor(-1);
                 text: "Voice Over"
             }
             Text {
                 font.family: scrog.name
-                font.pixelSize: 24
+                font.pixelSize: 28
                 horizontalAlignment:  Text.AlignHCenter
                 color: StrPool.getColor(-1);
                 text: "by Christiaan Janssen"
             }
             Text {
                 font.family: scrog.name
-                font.pixelSize: 16
+                font.pixelSize: 18
                 horizontalAlignment:  Text.AlignHCenter
                 color: StrPool.getColor(-1);
                 text: "Berlin Mini Jam November 2013"
+            }
+            Text {
+                font.family: scrog.name
+                font.pixelSize: 14
+                horizontalAlignment:  Text.AlignHCenter
+                color: StrPool.getColor(-1);
+                text: "\n\nMusic: The Open Goldberg Variations\n        by Kimiko Ishizaka (CC0)"
             }
         }
     }

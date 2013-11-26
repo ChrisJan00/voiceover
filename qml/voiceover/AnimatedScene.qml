@@ -5,6 +5,7 @@ Rectangle {
     id:animatedScene
     property int cellW: width/15
     property int baseW: width
+    property bool showcountdown: false
 
     color: StrPool.getColor(7);
 
@@ -12,7 +13,7 @@ Rectangle {
     property bool done:false
     property bool aboutToFinish: false
 
-    function reset() {
+    function start() {
         protag.opacity = 1;
         protag.color = StrPool.getColor(3);
         protag.x = cellW*3;
@@ -26,11 +27,8 @@ Rectangle {
         moveFriends = false;
         done = false;
         aboutToFinish = false;
-    }
-
-    function start() {
-        mainAnim.restart()
-        timecount.start()
+        countDownOverlay.visible = showcountdown;
+        startCountdown();
     }
 
     function stop() {
@@ -38,20 +36,6 @@ Rectangle {
         aboutToFinish = true;
         done = true;
     }
-
-    property string mytime:"0:0"
-    property int scnds:0
-    Timer {
-        id: timecount
-        running: false
-        repeat: true
-        interval: 1000
-        onTriggered: {
-            scnds++;
-            mytime = Math.floor(scnds/60)+":"+(scnds%60)
-        }
-    }
-
 
 
     Component.onCompleted: {
@@ -201,7 +185,39 @@ Rectangle {
 
     }
 
-//    Text {
-//        text: mytime
-//    }
+
+    Rectangle {
+        id: countDownOverlay
+        anchors.fill: parent
+        color: StrPool.getColor(7);
+        property int time:0
+        visible: false
+        Text {
+            anchors.centerIn: parent
+            font.family: scrog.name
+            font.pixelSize: 24
+            color: StrPool.getColor(-1);
+            text: "Starting in "+countDownOverlay.time;
+        }
+    }
+        function startCountdown() {
+            countDownOverlay.time = 3;
+            if (showcountdown) countDownOverlay.visible = true;
+            countdownTimer.restart();
+        }
+        Timer {
+            id: countdownTimer
+            interval: 1000
+            running: false
+            repeat: true
+            onTriggered: {
+                countDownOverlay.time--;
+                if (countDownOverlay.time<=0) {
+                    countDownOverlay.visible = false;
+                    mainAnim.restart();
+                    stop();
+                }
+            }
+        }
+
 }

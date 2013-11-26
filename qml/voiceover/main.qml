@@ -2,11 +2,9 @@ import QtQuick 1.1
 import "strpool.js" as StrPool
 
 // TODO:
-// the anims have to be reset immediately (not 1-sec delay)
 // countdown at start to give player time for reaction
 // text alignment/spacing in the selection
 // If possible only single-sentence texts
-// credits: song
 // rewrite text / fit better into anim
 
 Rectangle {
@@ -17,6 +15,7 @@ Rectangle {
 
     property bool replayAvailable: false;
     property bool isReplaying: false;
+    property bool canClick: false;
 
     signal sentenceSelected(string str)
     signal gameStarts
@@ -28,19 +27,10 @@ Rectangle {
         animDone = false;
         StrPool.restart();
         StrPool.startRecording();
-        animscene.reset();
         gameStarts(); // emit signal
-        startDelay.restart(); // start on my side
-    }
-
-    Timer {
-        id: startDelay
-        running: false
-        interval: 1000
-        repeat: false
-        onTriggered: {
-            animscene.start();
-        }
+        animscene.start();
+        clickDelay.start();
+        canClick = false;
     }
 
     property alias animDone: animscene.done
@@ -67,6 +57,16 @@ Rectangle {
         replayTimer.stop();
         overlay.visible = true;
 
+    }
+
+    Timer {
+        id: clickDelay
+        running: false
+        repeat: false
+        interval: 3000
+        onTriggered: {
+            canClick = true;
+        }
     }
 
     Timer {
@@ -104,6 +104,7 @@ Rectangle {
         anchors.topMargin: 10
         width: 250
         height: 250
+        showcountdown: true
     }
 
     ListModel {
@@ -140,6 +141,7 @@ Rectangle {
             }
             MouseArea {
                 anchors.fill: parent
+                enabled: canClick
                 onClicked: {
                     if (name != "SKIP") {
                         rootMain.sentenceSelected(name);
